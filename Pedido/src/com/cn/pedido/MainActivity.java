@@ -25,6 +25,7 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import org.apache.http.*;
 
 public class MainActivity extends Activity
 {
@@ -39,53 +40,63 @@ public class MainActivity extends Activity
         ArrayList<Product> productsAvaiable = new ArrayList<Product>();
 
         try {
+			StrictMode.ThreadPolicy policy= new StrictMode.ThreadPolicy.Builder().permitAll().build();
+			StrictMode.setThreadPolicy(policy);
             // Llamamos al servicio web para recuperar los datos
             HttpGet httpGet = new HttpGet("http://loswaykis.com/ws/wsproductos.php");
             HttpClient httpClient = new DefaultHttpClient();
-            HttpResponse response = (HttpResponse)httpClient.execute(httpGet);
-            //HttpEntity entity = response.getEntity();
-            //BufferedHttpEntity buffer = new BufferedHttpEntity(entity);
-            //InputStream iStream = buffer.getContent();
+            HttpResponse response = httpClient.execute(httpGet);
+           	StatusLine statusLine=response.getStatusLine();
+			if(statusLine.getStatusCode()==HttpStatus.SC_OK){
+				HttpEntity entity = response.getEntity();
+				BufferedHttpEntity buffer = new BufferedHttpEntity(entity);
+				InputStream iStream = buffer.getContent();
 
-			/*
-            String aux = "";
 
-            BufferedReader r = new BufferedReader(new InputStreamReader(iStream));
-            StringBuilder total = new StringBuilder();
-            String line;
-            while ((line = r.readLine()) != null) {
-                aux += line;
-            }
+				String aux = "";
+
+				BufferedReader r = new BufferedReader(new InputStreamReader(iStream));
+				StringBuilder total = new StringBuilder();
+				String line;
+				while ((line = r.readLine()) != null) {
+					aux += line;
+				}
+
+				// Parseamos la respuesta obtenida del servidor a un objeto JSON
+				JSONObject jsonObject = new JSONObject(aux);
+				JSONArray products = jsonObject.getJSONArray("productos");
+
+				Toast.makeText(getApplicationContext(), "Long"+products.length(),Toast.LENGTH_SHORT).show();
+				// Recorremos el array con los elementos cities
+				for(int i = 0; i < products.length(); i++) {
+					JSONObject product = products.getJSONObject(i);
+
+					// Creamos el objeto City
+					Product c = new Product(
+						product.getString("idproducto"), 
+						product.getString("name"), 
+						product.getString("description"), 
+						product.getLong("price"), 
+						product.getLong("stock"), 
+						product.getInt("status"));
+					c.setData(product.getString("photo"));
+
+					// Almacenamos el objeto en el array que hemos creado anteriormente
+					productsAvaiable.add(c);
+				}	
+			}
+			else
+				Toast.makeText(getApplicationContext(), "Message"+statusLine.getStatusCode(),Toast.LENGTH_SHORT).show();
 			
-            // Parseamos la respuesta obtenida del servidor a un objeto JSON
-            JSONObject jsonObject = new JSONObject(aux);
-            JSONArray products = jsonObject.getJSONArray("productos");
-
-            // Recorremos el array con los elementos cities
-            for(int i = 0; i < products.length(); i++) {
-                JSONObject product = products.getJSONObject(i);
-
-                // Creamos el objeto City
-                Product c = new Product(
-				product.getString("idproducto"), 
-				product.getString("name"), 
-				product.getString("description"), 
-				product.getLong("price"), 
-				product.getLong("stock"), 
-				product.getInt("status"));
-                c.setData(product.getString("photo"));
-
-                // Almacenamos el objeto en el array que hemos creado anteriormente
-                productsAvaiable.add(c);
-            }
-			*/
+			
         }
-        catch(Exception e) {
-            Log.e("WebService", e.getMessage());
-        }
+        catch(Exception ex) {
+
+			Toast.makeText(getApplicationContext(), "Message"+ex.getClass(),Toast.LENGTH_SHORT).show();
+		}
 
         // Creamos el objeto CityAdapter y lo asignamos al ListView
-        //ProductAdapter productAdapter = new ProductAdapter(this, productsAvaiable);
-        //lvProducts.setAdapter(productAdapter);
+        ProductAdapter productAdapter = new ProductAdapter(this, productsAvaiable);
+        lvProducts.setAdapter(productAdapter);
     }
 }

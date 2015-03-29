@@ -1,11 +1,11 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
     <ImageView
 		android:id="@+id/productImage"
-		android:layout_width ="wrap_content"
-		android:layout_height ="wrap_content"
+		android:layout_width ="100dp"
+		android:layout_height ="80dp"
 		android:layout_alignParentLeft ="true"
 		android:layout_centerInParent ="true"
 		/>
@@ -13,16 +13,31 @@
 		android:id="@+id/productName"
 		android:layout_width ="wrap_content"
 		android:layout_height ="wrap_content"
-		android:layout_centerVertical ="true"
-		android:layout_centerHorizontal ="true"
 		android:text="Name Product"
 		android:textAppearance="?android:attr/textAppearanceLarge"
+		android:layout_centerInParent ="true"
+		android:layout_toRightOf ="@+id/productImage"
+		/>
+	<TextView
+		android:id="@+id/productPrice"
+		android:layout_width ="wrap_content"
+		android:layout_height ="wrap_content"
+		android:layout_centerVertical ="true"
+		android:layout_centerHorizontal ="true"
+		android:layout_centerInParent ="true"
+		android:text="Price Product"
+		android:layout_alignBottom ="@+id/productAddCart"
+		android:layout_toLeftOf ="@+id/productAddCart"
+		android:layout_toStartOf ="@+id/productAddCart"
+		
 		/>
 	<ImageButton 
 		android:id="@+id/productAddCart"
 		android:layout_width ="wrap_content"
 		android:layout_height ="50dp"
+		android:layout_alignParentTop ="true"
 		android:layout_alignParentRight ="true"
+		android:layout_alignParentEnd ="true"
 		android:src="@android:drawable/ic_input_add"
 		/>
-</LinearLayout>
+</RelativeLayout>

@@ -52,6 +52,8 @@ public class ProductAdapter extends BaseAdapter
         TextView name = (TextView) vi.findViewById(R.id.productName);
         name.setText(product.getName());
 
+		TextView price = (TextView) vi.findViewById(R.id.productPrice);
+        price.setText(" S/. "+product.getPrice()+".00");
         return vi;
     }
 
