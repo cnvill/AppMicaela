@@ -96,5 +96,15 @@ public class MainActivity extends Activity
         // Creamos el objeto CityAdapter y lo asignamos al ListView
         ProductAdapter productAdapter = new ProductAdapter(this, productsAvaiable);
         lvProducts.setAdapter(productAdapter);
-    }
+    	
+		lvProducts.setOnItemClickListener( new AdapterView.OnItemClickListener(){
+			@Override
+			public void onItemClick(AdapterView parent, View view, int position, long id){
+				Product product=(Product)parent.getItemAtPosition(position);
+				Toast.makeText(getApplicationContext(), ""+product.getIdProduct(),Toast.LENGTH_SHORT).show();
+				
+			}
+		});
+		
+	}
 }

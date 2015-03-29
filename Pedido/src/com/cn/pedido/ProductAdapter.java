@@ -8,8 +8,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import android.widget.ImageButton;
 import java.util.ArrayList;
+import android.widget.Toast;
+
 public class ProductAdapter extends BaseAdapter 
 {
 	protected Activity activity;
@@ -42,7 +44,7 @@ public class ProductAdapter extends BaseAdapter
         if(convertView == null) {
             LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             vi = inflater.inflate(R.layout.list_item_layout, null);
-        }
+		}
 
         Product product = items.get(position);
 
@@ -54,6 +56,22 @@ public class ProductAdapter extends BaseAdapter
 
 		TextView price = (TextView) vi.findViewById(R.id.productPrice);
         price.setText(" S/. "+product.getPrice());
+		
+		TextView idproduct=(TextView)vi.findViewById(R.id.productId);
+		idproduct.setText(product.getIdProduct());
+		idproduct.setVisibility(View.INVISIBLE);
+		ImageButton buttonAdd = (ImageButton) vi.findViewById(R.id.productAddCart);
+        buttonAdd.setOnClickListener(new View.OnClickListener(){
+				@Override
+				public void onClick(View v){
+					View vi =(View)v.getParent();
+					TextView tv=(TextView)vi.findViewById(R.id.productName);
+					TextView id=(TextView)vi.findViewById(R.id.productId);
+					Toast.makeText(activity.getApplicationContext(),id.getText()+ "" + tv.getText(),Toast.LENGTH_SHORT).show();
+
+				}
+			});
+			
         return vi;
     }
 
