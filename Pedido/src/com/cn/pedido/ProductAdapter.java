@@ -11,7 +11,7 @@ import android.widget.TextView;
 import android.widget.ImageButton;
 import java.util.ArrayList;
 import android.widget.Toast;
-
+import android.content.*;
 public class ProductAdapter extends BaseAdapter 
 {
 	protected Activity activity;
@@ -60,6 +60,7 @@ public class ProductAdapter extends BaseAdapter
 		TextView idproduct=(TextView)vi.findViewById(R.id.productId);
 		idproduct.setText(product.getIdProduct());
 		idproduct.setVisibility(View.INVISIBLE);
+		
 		ImageButton buttonAdd = (ImageButton) vi.findViewById(R.id.productAddCart);
         buttonAdd.setOnClickListener(new View.OnClickListener(){
 				@Override
@@ -67,10 +68,11 @@ public class ProductAdapter extends BaseAdapter
 					View vi =(View)v.getParent();
 					TextView tv=(TextView)vi.findViewById(R.id.productName);
 					TextView id=(TextView)vi.findViewById(R.id.productId);
-					Toast.makeText(activity.getApplicationContext(),id.getText()+ "" + tv.getText(),Toast.LENGTH_SHORT).show();
-
+					Intent itemOrder= new Intent(activity.getApplicationContext(), ItemOrder.class);
+					activity.startActivityForResult(itemOrder, 2);
 				}
 			});
+			
 			
         return vi;
     }

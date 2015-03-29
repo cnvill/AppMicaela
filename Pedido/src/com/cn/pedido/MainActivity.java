@@ -26,6 +26,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import org.apache.http.*;
+import android.content.*;
 
 public class MainActivity extends Activity
 {
@@ -90,7 +91,7 @@ public class MainActivity extends Activity
         }
         catch(Exception ex) {
 
-			Toast.makeText(getApplicationContext(), "Message"+ex.getClass(),Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(), "No hay conexion a internet",Toast.LENGTH_SHORT).show();
 		}
 
         // Creamos el objeto CityAdapter y lo asignamos al ListView
@@ -105,6 +106,13 @@ public class MainActivity extends Activity
 				
 			}
 		});
-		
+	
 	}
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data)
+	{
+		// TODO: Implement this method
+	
+	}		
+	
 }
