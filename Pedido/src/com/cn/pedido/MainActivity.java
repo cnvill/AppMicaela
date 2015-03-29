@@ -56,7 +56,6 @@ public class MainActivity extends Activity
 				String aux = "";
 
 				BufferedReader r = new BufferedReader(new InputStreamReader(iStream));
-				StringBuilder total = new StringBuilder();
 				String line;
 				while ((line = r.readLine()) != null) {
 					aux += line;
@@ -66,18 +65,17 @@ public class MainActivity extends Activity
 				JSONObject jsonObject = new JSONObject(aux);
 				JSONArray products = jsonObject.getJSONArray("productos");
 
-				Toast.makeText(getApplicationContext(), "Long"+products.length(),Toast.LENGTH_SHORT).show();
-				// Recorremos el array con los elementos cities
+				// Recorremos el array con los elementos products
 				for(int i = 0; i < products.length(); i++) {
 					JSONObject product = products.getJSONObject(i);
 
-					// Creamos el objeto City
+					// Creamos el objeto product
 					Product c = new Product(
 						product.getString("idproducto"), 
 						product.getString("name"), 
 						product.getString("description"), 
-						product.getLong("price"), 
-						product.getLong("stock"), 
+						product.getDouble("price"), 
+						product.getDouble("stock"), 
 						product.getInt("status"));
 					c.setData(product.getString("photo"));
 
@@ -86,7 +84,7 @@ public class MainActivity extends Activity
 				}	
 			}
 			else
-				Toast.makeText(getApplicationContext(), "Message"+statusLine.getStatusCode(),Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(), "No hay Conexion a Internet"+statusLine.getStatusCode(),Toast.LENGTH_SHORT).show();
 			
 			
         }

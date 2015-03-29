@@ -9,12 +9,12 @@ public class Product
 	protected String name;
 	protected String data;
 	protected String description;
-	protected Long price;
-	protected Long stock;
+	protected Double price;
+	protected Double stock;
 	protected Integer status;
 	protected Bitmap photo;
 	
-	public Product(String idproduct, String name, String description, Long price, Long stock, Integer status ) {
+	public Product(String idproduct, String name, String description, Double price, Double stock, Integer status ) {
         this.idproduct = idproduct;
         this.name = name;
         this.description = description;
@@ -48,19 +48,19 @@ public class Product
         this.description = description;
     }
 
-    public Long getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Long price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
-    public Long getStock() {
+    public Double getStock() {
         return stock;
     }
 
-    public void setStock(Long stock) {
+    public void setStock(Double stock) {
         this.stock = stock;
     }
 
