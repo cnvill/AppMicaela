@@ -10,22 +10,21 @@
 			android:id="@+id/btnTotalProducts"
 			android:layout_width="wrap_content"
 			android:layout_height="50dp"
-			android:text="Productos Agregados: 0"
+			android:text="Agregados:0"
 			android:layout_alignParentLeft="true"
-		/>
+			android:layout_toLeftOf ="@+id/orderTotalPreci"
+			android:layout_toStartOf ="@+id/orderTotalPreci"
+			/>
 
 		<TextView
 			android:id="@+id/orderTotalPreci"
 			android:layout_width="wrap_content"
 			android:layout_height="50dp"
-			android:layout_alignBottom="@+id/btnOrderFinish"
-        	android:layout_toLeftOf="@+id/btnOrderFinish"
-        	android:layout_toStartOf="@+id/btnOrderFinish"
-			android:text="Costo Total S/. 0.00 "
+			android:layout_alignBottom ="@+id/btnOrderFinish"
+			android:layout_toLeftOf ="@+id/btnOrderFinish"
+			android:layout_toStartOf ="@+id/btnOrderFinish"
+			android:text="Costo s/. 0.00 "
 			android:textAppearance="?android:attr/textAppearanceLarge"
-			android:layout_centerInParent ="true"
-			android:layout_centerVertical ="true"
-			android:layout_centerHorizontal ="true"
 			/>
 
 		<ImageButton

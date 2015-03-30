@@ -2,12 +2,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal">
-    <ImageView
+
+	<TextView
+		android:id="@+id/productId"
+		android:layout_width ="1dp"
+		android:layout_height ="1dp"
+		android:visible="false"
+		android:layout_alignParentLeft ="true"
+		/>
+
+	<ImageView
 		android:id="@+id/productImage"
 		android:layout_width ="100dp"
 		android:layout_height ="80dp"
 		android:layout_alignParentLeft ="true"
-		android:layout_centerInParent ="true"
 		/>
 	<TextView
 		android:id="@+id/productName"
@@ -15,29 +23,18 @@
 		android:layout_height ="wrap_content"
 		android:text="Name Product"
 		android:textAppearance="?android:attr/textAppearanceLarge"
-		android:layout_centerInParent ="true"
 		android:layout_toRightOf ="@+id/productImage"
+		android:layout_toLeftOf ="@+id/productPrice"
+		android:layout_toStartOf ="@+id/productPrice"	
 		/>
-	<TextView
-		android:id="@+id/productId"
-		android:layout_width ="1dp"
-		android:layout_height ="1dp"
-		android:visible="false"
-		android:layout_centerInParent ="true"
-		android:layout_toRightOf ="@+id/productName"
-	/>
 	<TextView
 		android:id="@+id/productPrice"
 		android:layout_width ="wrap_content"
 		android:layout_height ="wrap_content"
-		android:layout_centerVertical ="true"
-		android:layout_centerHorizontal ="true"
-		android:layout_centerInParent ="true"
 		android:text="Price Product"
 		android:layout_alignBottom ="@+id/productAddCart"
 		android:layout_toLeftOf ="@+id/productAddCart"
-		android:layout_toStartOf ="@+id/productAddCart"
-		
+		android:layout_toStartOf ="@+id/productAddCart"		
 		/>
 	<ImageButton 
 		android:id="@+id/productAddCart"
