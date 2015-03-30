@@ -70,7 +70,8 @@ public class ProductAdapter extends BaseAdapter
 					TextView id=(TextView)vi.findViewById(R.id.productId);
 					Intent itemOrder= new Intent(activity.getApplicationContext(), ItemOrder.class);
 					activity.startActivityForResult(itemOrder, 2);
-				}
+			
+					}
 			});
 			
 			

@@ -1,5 +1,78 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+	android:orientation="horizontal" 
+	android:paddingTop="4dp"
+	android:paddingLeft="4dp"
+	android:paddingRight="4dp"
+	>
+     <ImageView
+		android:id="@+id/productViewImage"
+		android:layout_width ="300dp"
+		android:layout_height ="250dp"
+		android:layout_centerHorizontal ="true" 
+		/>
+
+	<TextView
+		android:id="@+id/productViewName"
+		android:layout_width ="wrap_content"
+		android:layout_height ="wrap_content"
+		android:text="Name Product"
+		android:textAppearance="?android:attr/textAppearanceLarge"
+		android:layout_centerInParent ="true"
+        android:layout_below="@+id/productViewImage"
+		/>
+	<TextView
+			android:id="@+id/productDescription"
+			android:layout_width ="wrap_content"
+			android:layout_height ="wrap_content"
+			android:text="Product Description"
+        	android:layout_below="@+id/productViewName"
+			android:paddingBottom="4dp"
+			/>
+
     
+	<TextView
+		android:id="@+id/lblQuantity"
+		android:layout_width="wrap_content"
+        android:layout_height="50dp"
+		android:layout_below="@+id/productDescription"
+		android:text="Cantidad:"
+		android:layout_toLeftOf="@+id/orderQuantity"
+		android:layout_toStartOf="@+id/orderQuantity"
+		android:paddingTop="10dp"
+		android:textAppearance="?android:attr/textAppearanceLarge"
+	/>
+    
+	<NumberPicker
+        android:id="@+id/orderQuantity"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+		android:layout_below="@+id/productDescription"
+		android:layout_toLeftOf="@+id/productViewPrice"
+		android:layout_toStartOf="@+id/productViewPrice"
+		android:textAppearance="?android:attr/textAppearanceLarge"
+		/>
+
+	<TextView
+		android:id="@+id/productViewPrice"
+		android:layout_width ="wrap_content"
+		android:layout_height="50dp"
+		android:text="S/. 0.00"
+		android:layout_below="@+id/productDescription"
+		android:layout_centerHorizontal ="true" 
+		android:layout_toLeftOf="@+id/addOrder"
+		android:layout_toStartOf="@+id/addOrder"
+		android:paddingTop="10dp"
+		android:textAppearance="?android:attr/textAppearanceLarge"
+		
+	/>
+    <Button
+        android:id="@+id/addOrder"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+		android:layout_below="@+id/productDescription"
+        android:text="Agregar" />
+	
 </RelativeLayout>
