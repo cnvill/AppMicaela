@@ -23,7 +23,7 @@
         android:layout_below="@+id/productViewImage"
 		/>
 	<TextView
-			android:id="@+id/productDescription"
+		android:id="@+id/productViewDescription"
 			android:layout_width ="wrap_content"
 			android:layout_height ="wrap_content"
 			android:text="Product Description"
@@ -36,7 +36,7 @@
 		android:id="@+id/lblQuantity"
 		android:layout_width="wrap_content"
         android:layout_height="50dp"
-		android:layout_below="@+id/productDescription"
+		android:layout_below="@+id/productViewDescription"
 		android:text="Cantidad:"
 		android:layout_toLeftOf="@+id/orderQuantity"
 		android:layout_toStartOf="@+id/orderQuantity"
@@ -48,7 +48,7 @@
         android:id="@+id/orderQuantity"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-		android:layout_below="@+id/productDescription"
+		android:layout_below="@+id/productViewDescription"
 		android:layout_toLeftOf="@+id/productViewPrice"
 		android:layout_toStartOf="@+id/productViewPrice"
 		android:textAppearance="?android:attr/textAppearanceLarge"
@@ -59,7 +59,7 @@
 		android:layout_width ="wrap_content"
 		android:layout_height="50dp"
 		android:text="S/. 0.00"
-		android:layout_below="@+id/productDescription"
+		android:layout_below="@+id/productViewDescription"
 		android:layout_centerHorizontal ="true" 
 		android:layout_toLeftOf="@+id/addOrder"
 		android:layout_toStartOf="@+id/addOrder"
@@ -72,7 +72,7 @@
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_alignParentRight="true"
-		android:layout_below="@+id/productDescription"
+		android:layout_below="@+id/productViewDescription"
         android:text="Agregar" />
 	
 </RelativeLayout>

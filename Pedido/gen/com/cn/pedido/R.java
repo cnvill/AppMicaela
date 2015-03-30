@@ -22,11 +22,11 @@ public final class R {
         public static final int orderQuantity=0x7f060004;
         public static final int orderTotalPreci=0x7f06000d;
         public static final int productAddCart=0x7f06000b;
-        public static final int productDescription=0x7f060002;
         public static final int productId=0x7f060007;
         public static final int productImage=0x7f060008;
         public static final int productName=0x7f060009;
         public static final int productPrice=0x7f06000a;
+        public static final int productViewDescription=0x7f060002;
         public static final int productViewImage=0x7f060000;
         public static final int productViewName=0x7f060001;
         public static final int productViewPrice=0x7f060005;

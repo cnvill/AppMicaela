@@ -30,6 +30,7 @@ import android.content.*;
 
 public class MainActivity extends Activity
 {
+	public  static  ArrayList<Product> productsAvaiable;
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -38,7 +39,7 @@ public class MainActivity extends Activity
         setContentView(R.layout.main);
 
         ListView lvProducts = (ListView) findViewById(R.id.lv_products);
-        ArrayList<Product> productsAvaiable = new ArrayList<Product>();
+         productsAvaiable = new ArrayList<Product>();
 
         try {
 			StrictMode.ThreadPolicy policy= new StrictMode.ThreadPolicy.Builder().permitAll().build();

@@ -66,12 +66,13 @@ public class ProductAdapter extends BaseAdapter
 				@Override
 				public void onClick(View v){
 					View vi =(View)v.getParent();
-					TextView tv=(TextView)vi.findViewById(R.id.productName);
 					TextView id=(TextView)vi.findViewById(R.id.productId);
+					
 					Intent itemOrder= new Intent(activity.getApplicationContext(), ItemOrder.class);
+					itemOrder.putExtra("idProduct",id.getText());
 					activity.startActivityForResult(itemOrder, 2);
-			
-					}
+					
+				}
 			});
 			
 			
