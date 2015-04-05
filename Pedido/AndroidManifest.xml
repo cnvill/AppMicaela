@@ -26,6 +26,10 @@
 			android:name=".ItemOrder"
 			android:label="@string/title_itemorder"
 			/>
+		<activity
+			android:name=".SendOrder"
+			android:label="@string/title_sendOrder"
+		/>
     </application>
 
 </manifest>

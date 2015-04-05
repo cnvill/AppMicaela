@@ -36,6 +36,7 @@
         	android:layout_alignParentEnd="true"
 			android:src="@android:drawable/ic_menu_send"
 			android:text="Pedir"
+			android:onClick="onSendOrder"
 		/>
 
     <ListView

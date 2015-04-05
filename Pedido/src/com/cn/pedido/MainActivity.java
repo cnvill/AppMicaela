@@ -109,7 +109,18 @@ public class MainActivity extends Activity
         ProductAdapter productAdapter = new ProductAdapter(this, productsAvaiable);
         lvProducts.setAdapter(productAdapter);
 	}
-
+	
+	public void onSendOrder(View v){
+		if(ordersList!=null){
+			Intent sendOrder= new Intent(this.getApplicationContext(), SendOrder.class);
+			sendOrder.putExtra("ordersList",ordersList);
+			this.startActivityForResult(sendOrder, 2);
+		}
+		else
+			Toast.makeText(getApplicationContext(), "No se agrego ningun producto, agrege para poder realizar el pedido",Toast.LENGTH_SHORT).show();
+		
+	}
+	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data)
 	{
