@@ -18,9 +18,9 @@ public final class R {
         public static final int btnOrderFinish=0x7f06000e;
         public static final int btnTotalProducts=0x7f06000c;
         public static final int lblQuantity=0x7f060003;
+        public static final int lblTotalPrice=0x7f06000d;
         public static final int lv_products=0x7f06000f;
         public static final int orderQuantity=0x7f060004;
-        public static final int orderTotalPreci=0x7f06000d;
         public static final int productAddCart=0x7f06000b;
         public static final int productId=0x7f060007;
         public static final int productImage=0x7f060008;

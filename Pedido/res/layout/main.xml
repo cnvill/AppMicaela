@@ -12,12 +12,12 @@
 			android:layout_height="50dp"
 			android:text="Agregados:0"
 			android:layout_alignParentLeft="true"
-			android:layout_toLeftOf ="@+id/orderTotalPreci"
-			android:layout_toStartOf ="@+id/orderTotalPreci"
+			android:layout_toLeftOf ="@+id/lblTotalPrice"
+			android:layout_toStartOf ="@+id/lblTotalPrice"
 			/>
 
 		<TextView
-			android:id="@+id/orderTotalPreci"
+			android:id="@+id/lblTotalPrice"
 			android:layout_width="wrap_content"
 			android:layout_height="50dp"
 			android:layout_alignBottom ="@+id/btnOrderFinish"

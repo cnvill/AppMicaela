@@ -27,20 +27,30 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import org.apache.http.*;
 import android.content.*;
-
+import java.util.UUID;
+import java.text.*;
 public class MainActivity extends Activity
 {
 	public  static  ArrayList<Product> productsAvaiable;
-    /** Called when the activity is first created. */
+    public  static  ArrayList<Order> ordersList;
+    private TextView lblTotalCost;
+	private Button btnTotalProduct;
+	private static Double totalPreci=0.00;
+	/** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState)
 	{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-
+	
+		
         ListView lvProducts = (ListView) findViewById(R.id.lv_products);
-         productsAvaiable = new ArrayList<Product>();
-
+    	lblTotalCost=(TextView)findViewById(R.id.lblTotalPrice);    
+		btnTotalProduct=(Button)findViewById(R.id.btnTotalProducts);
+		
+		productsAvaiable = new ArrayList<Product>();
+		ordersList=new ArrayList<Order>();
+		
         try {
 			StrictMode.ThreadPolicy policy= new StrictMode.ThreadPolicy.Builder().permitAll().build();
 			StrictMode.setThreadPolicy(policy);
@@ -105,9 +115,38 @@ public class MainActivity extends Activity
 	{
 		// TODO: Implement this method
 		super.onActivityResult(requestCode, resultCode, data);
-		if(requestCode==1){
+		if(requestCode == 1) {
+	     if(resultCode == 1)
 			if(data.getExtras().get("addQuantity")!=null){
+				String idProduct=data.getExtras().get("addIdProduct").toString();
+				Integer indice=-1;
+				for(int i=0; i<ordersList.size(); i++){
+					if(ordersList.get(i).getIdProduct().equalsIgnoreCase(idProduct))
+					{
+						indice=i;
+						break;
+					}
+				}
+				
+				if(indice>-1){
+						
+					ordersList.get(indice).setQuantity(ordersList.get(indice).getQuantity()+Double.parseDouble(data.getExtras().get("addQuantity").toString()));
+					
+				}else{
+					
+					Order oOrder = new Order();
+					UUID uidd = UUID.randomUUID();
 
+					oOrder.setIdOrder(uidd.toString());
+					oOrder.setIdProduct(idProduct);
+					oOrder.setQuantity(Double.parseDouble(data.getExtras().get("addQuantity").toString()));
+					ordersList.add(oOrder);
+				}
+				
+				totalPreci=totalPreci+Double.parseDouble(data.getExtras().get("addQuantity").toString())*Double.parseDouble(data.getExtras().get("addPreci").toString());	
+				DecimalFormat df= new DecimalFormat("#.##");
+				btnTotalProduct.setText("Agregados: "+ordersList.size());
+				lblTotalCost.setText("Costo s/."+df.format(totalPreci));
 			}
 		}
 	}

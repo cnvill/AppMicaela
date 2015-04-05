@@ -5,7 +5,11 @@ public class Order
 	protected String idorder;
 	protected String idproduct;
 	protected Double quantity;
-
+	
+	public Order(){
+		
+	}
+	
 	public Order(String idorder, String idproduct, Double quantity) {
         this.idorder = idorder;
         this.idproduct = idproduct;
