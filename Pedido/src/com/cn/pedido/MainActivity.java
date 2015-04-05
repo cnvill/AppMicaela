@@ -98,22 +98,18 @@ public class MainActivity extends Activity
         // Creamos el objeto CityAdapter y lo asignamos al ListView
         ProductAdapter productAdapter = new ProductAdapter(this, productsAvaiable);
         lvProducts.setAdapter(productAdapter);
-    	
-		lvProducts.setOnItemClickListener( new AdapterView.OnItemClickListener(){
-			@Override
-			public void onItemClick(AdapterView parent, View view, int position, long id){
-				Product product=(Product)parent.getItemAtPosition(position);
-				Toast.makeText(getApplicationContext(), ""+product.getIdProduct(),Toast.LENGTH_SHORT).show();
-				
-			}
-		});
-	
 	}
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data)
 	{
 		// TODO: Implement this method
-	
-	}		
+		super.onActivityResult(requestCode, resultCode, data);
+		if(requestCode==1){
+			if(data.getExtras().get("addQuantity")!=null){
+
+			}
+		}
+	}
 	
 }

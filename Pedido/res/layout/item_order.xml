@@ -73,6 +73,7 @@
         android:layout_height="50dp"
         android:layout_alignParentRight="true"
 		android:layout_below="@+id/productViewDescription"
-        android:text="Agregar" />
+        android:text="Agregar" 
+		android:onClick="addToCart"/>
 	
 </RelativeLayout>

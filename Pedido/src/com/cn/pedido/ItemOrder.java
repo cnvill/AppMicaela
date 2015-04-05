@@ -1,9 +1,11 @@
 package com.cn.pedido;
+
 import android.app.*;
 import android.os.*;
 import android.view.*;
 import android.widget.*;
 import android.widget.NumberPicker;
+import android.content.Intent;
 
 
 import android.os.Bundle;
@@ -13,21 +15,22 @@ import java.util.*;
 
 public class ItemOrder extends Activity
 {
-	NumberPicker npQunatity;
+	NumberPicker npQuantity;
     ImageView imageProduct;
 	TextView nameProduct, preciProduct, descriptionProduct;
+	private static String IdProduct;
 	@Override
     public void onCreate(Bundle savedInstanceState)
 	{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.item_order);
 		
-		npQunatity=(NumberPicker)findViewById(R.id.orderQuantity);
+		npQuantity=(NumberPicker)findViewById(R.id.orderQuantity);
 		imageProduct=(ImageView)findViewById(R.id.productViewImage);
 		nameProduct=(TextView)findViewById(R.id.productViewName);
 		preciProduct=(TextView)findViewById(R.id.productViewPrice);
 		descriptionProduct=(TextView)findViewById(R.id.productViewDescription);
-		npQunatity.setMinValue(1);
+		npQuantity.setMinValue(1);
 		
 		Bundle bundle=getIntent().getExtras();
 		if(bundle.getString("idProduct")!=null){
@@ -43,18 +46,26 @@ public class ItemOrder extends Activity
 			}
 
 			Product oProduct=listProduct.get(indice);
+			IdProduct=oProduct.getIdProduct();
 			imageProduct.setImageBitmap(oProduct.getPhoto());
 			nameProduct.setText(oProduct.getName());
 			descriptionProduct.setText(oProduct.getDescription());
 			preciProduct.setText("s/. "+oProduct.getPrice());
 			Double stock=new Double(oProduct.getStock());
-			npQunatity.setMaxValue(stock.intValue());
+			npQuantity.setMaxValue(stock.intValue());
 			//Toast.makeText(getApplicationContext(), "i"+oProduct.getStock(),Toast.LENGTH_SHORT).show();
-			npQunatity.setWrapSelectorWheel(true);
-			npQunatity.showContextMenu();
+			npQuantity.setWrapSelectorWheel(true);
+			npQuantity.showContextMenu();
 			
 		}
-	    
-		}
+	   }
+	   
+	public void addToCart(View v){
+		   Intent intent=getIntent();
+		   intent.putExtra("addIdProduct",IdProduct);
+		   intent.putExtra("addQuantity",npQuantity.getValue());
+		   setResult(1, intent);
+		   this.finish();
+	   }
 	
 }

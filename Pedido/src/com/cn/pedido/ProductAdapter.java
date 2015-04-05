@@ -70,7 +70,7 @@ public class ProductAdapter extends BaseAdapter
 					
 					Intent itemOrder= new Intent(activity.getApplicationContext(), ItemOrder.class);
 					itemOrder.putExtra("idProduct",id.getText());
-					activity.startActivityForResult(itemOrder, 2);
+					activity.startActivityForResult(itemOrder, 1);
 					
 				}
 			});
