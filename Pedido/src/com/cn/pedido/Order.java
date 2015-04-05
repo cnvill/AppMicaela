@@ -1,6 +1,7 @@
 package com.cn.pedido;
+import java.io.Serializable;
 
-public class Order
+public class Order implements Serializable
 {
 	protected String idorder;
 	protected String idproduct;

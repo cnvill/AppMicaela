@@ -5,8 +5,7 @@ import android.os.*;
 import android.view.*;
 import android.widget.*;
 
-public class SendOrder extends Activity
-{
+public class SendOrder extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{

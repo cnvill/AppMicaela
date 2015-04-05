@@ -111,9 +111,13 @@ public class MainActivity extends Activity
 	}
 	
 	public void onSendOrder(View v){
-		if(ordersList!=null){
-			Intent sendOrder= new Intent(this.getApplicationContext(), SendOrder.class);
-			sendOrder.putExtra("ordersList",ordersList);
+		if(ordersList.size()>0){
+			
+			Bundle orders= new Bundle();
+			orders.putSerializable("ordersList", ordersList);
+			
+			Intent sendOrder= new Intent(getBaseContext(), SendOrder.class);
+			sendOrder.putExtra("orders", orders);
 			this.startActivityForResult(sendOrder, 2);
 		}
 		else
