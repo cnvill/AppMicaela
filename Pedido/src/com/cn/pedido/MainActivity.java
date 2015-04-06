@@ -29,6 +29,7 @@ import org.apache.http.*;
 import android.content.*;
 import java.util.UUID;
 import java.text.*;
+
 public class MainActivity extends Activity
 {
 	public  static  ArrayList<Product> productsAvaiable;
@@ -115,9 +116,9 @@ public class MainActivity extends Activity
 			
 			Bundle orders= new Bundle();
 			orders.putSerializable("ordersList", ordersList);
-			
 			Intent sendOrder= new Intent(getBaseContext(), SendOrder.class);
 			sendOrder.putExtra("orders", orders);
+			sendOrder.putExtra("totalCost",totalPreci);
 			this.startActivityForResult(sendOrder, 2);
 		}
 		else
@@ -155,6 +156,7 @@ public class MainActivity extends Activity
 					oOrder.setIdOrder(uidd.toString());
 					oOrder.setIdProduct(idProduct);
 					oOrder.setQuantity(Double.parseDouble(data.getExtras().get("addQuantity").toString()));
+					oOrder.setName(data.getExtras().get("addName").toString());
 					ordersList.add(oOrder);
 				}
 				

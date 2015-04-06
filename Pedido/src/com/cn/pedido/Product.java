@@ -3,6 +3,8 @@ package com.cn.pedido;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
+import java.io.Serializable;
+
 public class Product
 {
 	protected String idproduct;

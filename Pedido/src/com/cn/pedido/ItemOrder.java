@@ -67,6 +67,7 @@ public class ItemOrder extends Activity
 		   intent.putExtra("addIdProduct", idProduct);
 		   intent.putExtra("addPreci", preci);
 		   intent.putExtra("addQuantity", npQuantity.getValue());
+		   intent.putExtra("addName", nameProduct.getText());
 		   setResult(1, intent);
 		   this.finish();
 	   }

@@ -6,15 +6,17 @@ public class Order implements Serializable
 	protected String idorder;
 	protected String idproduct;
 	protected Double quantity;
+	protected String name;
 	
 	public Order(){
 		
 	}
 	
-	public Order(String idorder, String idproduct, Double quantity) {
+	public Order(String idorder, String idproduct, Double quantity, String name) {
         this.idorder = idorder;
         this.idproduct = idproduct;
         this.quantity = quantity;
+		this.name=name;
     }
 	
 	public String getIdOrder() {
@@ -39,5 +41,14 @@ public class Order implements Serializable
 
     public void setQuantity(Double quantity) {
         this.quantity = quantity;
+    }
+	
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
