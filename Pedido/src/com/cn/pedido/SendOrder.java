@@ -20,10 +20,19 @@ import org.apache.http.client.methods.*;
 import org.apache.http.message.*;
 import org.apache.http.client.entity.*;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.widget.AdapterView.*;
+import android.content.Intent;
 
 public class SendOrder extends Activity {
+	
 	ArrayList<Order> listOrders= new ArrayList<Order>();
 	ArrayList<Product> listProducts= new ArrayList<Product>();
+	ListView lsvSammary;
+	TextView lblSammaryCostTotal;
+	AlertDialog.Builder dlConfirmacion;
+	int indice=-1;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -31,8 +40,8 @@ public class SendOrder extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.send_to_order);		
 		
-		ListView lsvSammary=(ListView)findViewById(R.id.lsvSummary);		
-		TextView lblSammaryCostTotal=(TextView)findViewById(R.id.lblSummaryCostTotal);		
+		lsvSammary=(ListView)findViewById(R.id.lsvSummary);		
+		lblSammaryCostTotal=(TextView)findViewById(R.id.lblSummaryCostTotal);		
 		
 		Bundle extraOrders=getIntent().getBundleExtra("orders");
 		listOrders=(ArrayList<Order>)extraOrders.getSerializable("ordersList");
@@ -41,13 +50,54 @@ public class SendOrder extends Activity {
 		final ArrayList<String> from= new ArrayList<String>();
 		for(int i=0;i<listOrders.size();i++)
 			from.add(df.format(listOrders.get(i).getQuantity())+":"+listOrders.get(i).getName());		
-
-		
 		
 		final StableArrayAdapter adapter= new StableArrayAdapter(this, android.R.layout.simple_list_item_1, from);
 		lsvSammary.setAdapter(adapter);
 		df= new DecimalFormat("#.##");
 		lblSammaryCostTotal.setText("Costo Total: s/."+df.format(getIntent().getExtras().getDouble("totalCost")));	
+		
+		dlConfirmacion = new AlertDialog.Builder(this);
+		dlConfirmacion.setTitle(".:: Aviso");
+        dlConfirmacion.setMessage("¿ Estas seguro de quitar el producto?");
+        dlConfirmacion.setCancelable(false);
+
+        AlertDialog.Builder aceptar = dlConfirmacion.setPositiveButton("Aceptar", 
+        new DialogInterface.OnClickListener() {
+        public void onClick(DialogInterface dialogo, int id) {
+        		if(indice>-1){
+					
+        			listOrders.remove(indice);
+        			indice=-1;
+					DecimalFormat df= new DecimalFormat("#");
+					final ArrayList<String> from= new ArrayList<String>();
+					Double tempTotalCost=0.0;
+					for(int i=0;i<listOrders.size();i++){						
+						from.add(df.format(listOrders.get(i).getQuantity())+":"+listOrders.get(i).getName());
+						tempTotalCost=tempTotalCost+listOrders.get(i).getQuantity()*listOrders.get(i).getPrice();
+						}
+					df= new DecimalFormat("#.##");
+					lblSammaryCostTotal.setText("Costo Total: s/."+ df.format(tempTotalCost));
+					
+					final StableArrayAdapter adapter= new StableArrayAdapter(SendOrder.this, android.R.layout.simple_list_item_1, from);
+					lsvSammary.setAdapter(adapter);
+        		}
+            }
+        });
+        
+        dlConfirmacion.setNegativeButton("Cancelar", 
+        new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialogo, int id) {
+                
+            }
+        });
+		
+
+		lsvSammary.setOnItemClickListener(new  AdapterView.OnItemClickListener(){
+				public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+					indice=position;
+					dlConfirmacion.show();
+				} 
+			});
 	}	
 	
 	public void onFinishOrder(View v){
@@ -69,7 +119,8 @@ public class SendOrder extends Activity {
 		}
 		catch(Exception ex){
 	
-		}		
+		}
+	
 	}
 
 	 private class StableArrayAdapter extends ArrayAdapter<String> {
@@ -96,4 +147,18 @@ public class SendOrder extends Activity {
         }
 
     }
+
+	@Override
+	public void onBackPressed()
+	{
+		// TODO: Implement this method
+		Bundle orders= new Bundle();
+		orders.putSerializable("ordersList", listOrders);
+		Intent intent = getIntent();
+		intent.putExtra("updateOrders", orders);
+		setResult(2, intent);
+		super.onBackPressed();
+	}
+
+	
 }

@@ -129,6 +129,7 @@ public class MainActivity extends Activity
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data)
 	{
+		
 		// TODO: Implement this method
 		super.onActivityResult(requestCode, resultCode, data);
 		if(requestCode == 1) {
@@ -156,14 +157,34 @@ public class MainActivity extends Activity
 					oOrder.setIdOrder(uidd.toString());
 					oOrder.setIdProduct(idProduct);
 					oOrder.setQuantity(Double.parseDouble(data.getExtras().get("addQuantity").toString()));
+					oOrder.setPrice(Double.parseDouble(data.getExtras().get("addPrice").toString()));
 					oOrder.setName(data.getExtras().get("addName").toString());
 					ordersList.add(oOrder);
 				}
 				
-				totalPreci=totalPreci+Double.parseDouble(data.getExtras().get("addQuantity").toString())*Double.parseDouble(data.getExtras().get("addPreci").toString());	
+				totalPreci=totalPreci+Double.parseDouble(data.getExtras().get("addQuantity").toString())*Double.parseDouble(data.getExtras().get("addPrice").toString());	
 				DecimalFormat df= new DecimalFormat("#.##");
 				btnTotalProduct.setText("Agregados: "+ordersList.size());
 				lblTotalCost.setText("Costo s/."+df.format(totalPreci));
+			}
+		}
+		
+		if(requestCode == 2) {
+			if(resultCode == 2){
+
+				Bundle extraOrders=data.getBundleExtra("updateOrders");
+
+				ordersList=new ArrayList<Order>();
+				ordersList=(ArrayList<Order>)extraOrders.getSerializable("ordersList");
+
+				Double tempTotalPrice =0.0;
+				for(int i=0; i<ordersList.size();i++)
+					tempTotalPrice=tempTotalPrice+ordersList.get(i).getQuantity()*ordersList.get(i).getPrice();									
+				
+				totalPreci=tempTotalPrice;
+				DecimalFormat df= new DecimalFormat("#.##");
+				btnTotalProduct.setText("Agregados: "+ordersList.size());
+				lblTotalCost.setText("Costo s/."+df.format(tempTotalPrice));
 			}
 		}
 	}

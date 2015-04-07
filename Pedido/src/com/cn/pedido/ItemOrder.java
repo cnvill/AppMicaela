@@ -18,7 +18,7 @@ public class ItemOrder extends Activity
     ImageView imageProduct;
 	TextView nameProduct, preciProduct, descriptionProduct;
 	private static String idProduct;
-	private static Double preci;
+	private static Double price=0.0;
 	@Override
     public void onCreate(Bundle savedInstanceState)
 	{
@@ -48,11 +48,11 @@ public class ItemOrder extends Activity
 			}
 
 			Product oProduct = listProduct.get(indice);
-			preci = oProduct.getPrice();
+			price = oProduct.getPrice();
 			imageProduct.setImageBitmap(oProduct.getPhoto());
 			nameProduct.setText(oProduct.getName());
 			descriptionProduct.setText(oProduct.getDescription());
-			preciProduct.setText("s/. "+oProduct.getPrice());
+			preciProduct.setText("s/. "+price);
 			Double stock=new Double(oProduct.getStock());
 			npQuantity.setMaxValue(stock.intValue());
 			//Toast.makeText(getApplicationContext(), "i"+oProduct.getStock(),Toast.LENGTH_SHORT).show();
@@ -65,7 +65,7 @@ public class ItemOrder extends Activity
 		
 		   Intent intent = getIntent();
 		   intent.putExtra("addIdProduct", idProduct);
-		   intent.putExtra("addPreci", preci);
+		   intent.putExtra("addPrice", price);
 		   intent.putExtra("addQuantity", npQuantity.getValue());
 		   intent.putExtra("addName", nameProduct.getText());
 		   setResult(1, intent);
