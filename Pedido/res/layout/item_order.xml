@@ -90,13 +90,13 @@
 		android:textAppearance="?android:attr/textAppearanceLarge"
 	/>
 
-<Button
+<ImageButton
         android:id="@+id/addOrder"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_alignParentRight="true"
 		android:layout_below="@+id/productViewDescription"
-        android:text="Agregar" 
+	    android:src="@android:drawable/ic_input_add" 
 		android:onClick="addToCart"/>
 	
 </RelativeLayout>
