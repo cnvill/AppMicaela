@@ -11,27 +11,31 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.widget.ListView;
 import java.util.*;
+import java.text.*;
 
 public class ItemOrder extends Activity
 {
-	NumberPicker npQuantity;
+	EditText npQuantity;
     ImageView imageProduct;
-	TextView nameProduct, preciProduct, descriptionProduct;
+	TextView nameProduct, preciProduct, descriptionProduct, costTotal;
 	private static String idProduct;
 	private static Double price=0.0;
+	private static Integer Quantity=1;
 	@Override
     public void onCreate(Bundle savedInstanceState)
 	{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.item_order);
 		
-		npQuantity=(NumberPicker)findViewById(R.id.orderQuantity);
+		npQuantity=(EditText)findViewById(R.id.orderQuantity);
 		imageProduct=(ImageView)findViewById(R.id.productViewImage);
 		nameProduct=(TextView)findViewById(R.id.productViewName);
 		preciProduct=(TextView)findViewById(R.id.productViewPrice);
 		descriptionProduct=(TextView)findViewById(R.id.productViewDescription);
-		npQuantity.setMinValue(1);
-		
+		costTotal=(TextView)findViewById(R.id.costTotalView);
+
+		npQuantity.setText("1");
+		npQuantity.setEnabled(false);
 		Bundle bundle=getIntent().getExtras();
 		
 		if(bundle.getString("idProduct")!=null){
@@ -52,12 +56,10 @@ public class ItemOrder extends Activity
 			imageProduct.setImageBitmap(oProduct.getPhoto());
 			nameProduct.setText(oProduct.getName());
 			descriptionProduct.setText(oProduct.getDescription());
-			preciProduct.setText("s/. "+price);
+			preciProduct.setText("s/."+price+" ");
+			costTotal.setText(" s/."+price+" ");
 			Double stock=new Double(oProduct.getStock());
-			npQuantity.setMaxValue(stock.intValue());
-			//Toast.makeText(getApplicationContext(), "i"+oProduct.getStock(),Toast.LENGTH_SHORT).show();
-			npQuantity.setWrapSelectorWheel(true);
-			npQuantity.showContextMenu();
+			Quantity=stock.intValue();
 		}
 	   }
 	   
@@ -66,10 +68,28 @@ public class ItemOrder extends Activity
 		   Intent intent = getIntent();
 		   intent.putExtra("addIdProduct", idProduct);
 		   intent.putExtra("addPrice", price);
-		   intent.putExtra("addQuantity", npQuantity.getValue());
+		   intent.putExtra("addQuantity",Integer.parseInt(npQuantity.getText().toString()));
 		   intent.putExtra("addName", nameProduct.getText());
 		   setResult(1, intent);
 		   this.finish();
 	   }
+	public void onMenos(View v){
+	 Integer value= Integer.parseInt(npQuantity.getText().toString());
+	 value=value-1;
+	 if(value<=1)
+		 value=1;
+		npQuantity.setText(""+value);
+		DecimalFormat df= new DecimalFormat("#.##");
+		costTotal.setText(" s/."+df.format(price*value)+" ");
+	}
 	
+	public void onMas(View v){
+		Integer value= Integer.parseInt(npQuantity.getText().toString());
+		value=value+1;
+		if(value>=Quantity)
+			value=Quantity;
+		npQuantity.setText(""+value);	
+		DecimalFormat df= new DecimalFormat("#.##");
+		costTotal.setText(" s/."+df.format(price*value)+" ");
+	}
 }

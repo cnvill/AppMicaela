@@ -14,26 +14,28 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int addOrder=0x7f060006;
-        public static final int btnFinishOrder=0x7f060012;
-        public static final int btnOrderFinish=0x7f06000e;
-        public static final int btnTotalProducts=0x7f06000c;
-        public static final int lblQuantity=0x7f060003;
-        public static final int lblSummaryCostTotal=0x7f060011;
-        public static final int lblTotalPrice=0x7f06000d;
-        public static final int lsvSummary=0x7f060013;
-        public static final int lv_products=0x7f06000f;
-        public static final int orderQuantity=0x7f060004;
-        public static final int productAddCart=0x7f06000b;
-        public static final int productId=0x7f060007;
-        public static final int productImage=0x7f060008;
-        public static final int productName=0x7f060009;
-        public static final int productPrice=0x7f06000a;
+        public static final int addMas=0x7f060006;
+        public static final int addMenos=0x7f060004;
+        public static final int addOrder=0x7f060008;
+        public static final int btnFinishOrder=0x7f060014;
+        public static final int btnOrderFinish=0x7f060010;
+        public static final int btnTotalProducts=0x7f06000e;
+        public static final int costTotalView=0x7f060007;
+        public static final int lblSummaryCostTotal=0x7f060013;
+        public static final int lblTotalPrice=0x7f06000f;
+        public static final int lsvSummary=0x7f060015;
+        public static final int lv_products=0x7f060011;
+        public static final int orderQuantity=0x7f060005;
+        public static final int productAddCart=0x7f06000d;
+        public static final int productId=0x7f060009;
+        public static final int productImage=0x7f06000a;
+        public static final int productName=0x7f06000b;
+        public static final int productPrice=0x7f06000c;
         public static final int productViewDescription=0x7f060002;
         public static final int productViewImage=0x7f060000;
         public static final int productViewName=0x7f060001;
-        public static final int productViewPrice=0x7f060005;
-        public static final int txtAddress=0x7f060010;
+        public static final int productViewPrice=0x7f060003;
+        public static final int txtAddress=0x7f060012;
     }
     public static final class layout {
         public static final int item_order=0x7f030000;

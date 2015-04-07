@@ -31,43 +31,66 @@
 			android:paddingBottom="4dp"
 			/>
 
-    
-	<TextView
-		android:id="@+id/lblQuantity"
-		android:layout_width="wrap_content"
-        android:layout_height="50dp"
-		android:layout_below="@+id/productViewDescription"
-		android:text="Cantidad:"
-		android:layout_toLeftOf="@+id/orderQuantity"
-		android:layout_toStartOf="@+id/orderQuantity"
-		android:paddingTop="10dp"
-		android:textAppearance="?android:attr/textAppearanceLarge"
-	/>
-    
-	<NumberPicker
-        android:id="@+id/orderQuantity"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-		android:layout_below="@+id/productViewDescription"
-		android:layout_toLeftOf="@+id/productViewPrice"
-		android:layout_toStartOf="@+id/productViewPrice"
-		android:textAppearance="?android:attr/textAppearanceLarge"
-		/>
-
 	<TextView
 		android:id="@+id/productViewPrice"
 		android:layout_width ="wrap_content"
 		android:layout_height="50dp"
-		android:text="S/. 0.00"
+		android:text="Costo: S/.0.00"
+		android:layout_below="@+id/productViewDescription"
+		android:layout_centerHorizontal ="true" 
+		android:layout_toLeftOf="@+id/addMenos"
+		android:layout_toStartOf="@+id/addMenos"
+		android:paddingTop="10dp"
+		android:textAppearance="?android:attr/textAppearanceLarge"
+
+	/>
+	
+    <Button
+        android:id="@+id/addMenos"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="-" 
+		android:layout_below="@+id/productViewDescription"
+		android:layout_toLeftOf="@+id/orderQuantity"
+		android:layout_toStartOf="@+id/orderQuantity"
+		android:textAppearance="?android:attr/textAppearanceLarge"
+		android:onClick="onMenos"/>
+	<EditText
+        android:id="@+id/orderQuantity"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+		android:maxLength="2"
+		android:inputType="number"
+		android:layout_below="@+id/productViewDescription"
+		android:layout_toLeftOf="@+id/addMas"
+		android:layout_toStartOf="@+id/addMas"
+		android:textAppearance="?android:attr/textAppearanceLarge"
+		/>
+	<Button
+        android:id="@+id/addMas"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+		android:layout_below="@+id/productViewDescription"
+		android:layout_toLeftOf="@+id/costTotalView"
+		android:layout_toStartOf="@+id/costTotalView"
+		android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="+" 
+		android:onClick="onMas"/>
+	
+<TextView
+		android:id="@+id/costTotalView"
+		android:layout_width ="wrap_content"
+		android:layout_height="50dp"
+		android:text="S/.0.00"
 		android:layout_below="@+id/productViewDescription"
 		android:layout_centerHorizontal ="true" 
 		android:layout_toLeftOf="@+id/addOrder"
 		android:layout_toStartOf="@+id/addOrder"
 		android:paddingTop="10dp"
 		android:textAppearance="?android:attr/textAppearanceLarge"
-		
 	/>
-    <Button
+
+<Button
         android:id="@+id/addOrder"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
