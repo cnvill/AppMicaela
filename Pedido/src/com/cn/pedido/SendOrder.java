@@ -23,6 +23,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.widget.AdapterView.*;
 import android.content.Intent;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import org.apache.http.*;
+
 
 public class SendOrder extends Activity {
 	
@@ -102,23 +107,58 @@ public class SendOrder extends Activity {
 	
 	public void onFinishOrder(View v){
 		try{
+			StrictMode.ThreadPolicy policy= new StrictMode.ThreadPolicy.Builder().permitAll().build();
+			StrictMode.setThreadPolicy(policy);
+			
 			HttpClient oHttpclient= new DefaultHttpClient();
 			HttpPost oHttpPost = new HttpPost("http://loswaykis.com/ws/wspedidoinsert.php");
 			List<BasicNameValuePair> namevaluePairs= new ArrayList<BasicNameValuePair>();
 			
 			for(int i=0; i<listOrders.size(); i++){
 				
-				namevaluePairs.add(new BasicNameValuePair("idOrders[]", listOrders.get(i).getIdOrder()));
-				namevaluePairs.add(new BasicNameValuePair("idProducts[]", listOrders.get(i).getIdProduct()));
-				namevaluePairs.add(new BasicNameValuePair("Quantities[]", ""+listOrders.get(i).getQuantity()));
+				namevaluePairs.add(new BasicNameValuePair("idOrders["+i+"]", listOrders.get(i).getIdOrder()));
+				namevaluePairs.add(new BasicNameValuePair("idProducts["+i+"]", listOrders.get(i).getIdProduct()));
+				namevaluePairs.add(new BasicNameValuePair("Quantities["+i+"]", ""+listOrders.get(i).getQuantity()));
 			}
 			
 			oHttpPost.setEntity(new UrlEncodedFormEntity(namevaluePairs));
 			HttpResponse response=oHttpclient.execute(oHttpPost);
-			response.getStatusLine();
+			if(response.getStatusLine().getStatusCode()== HttpStatus.SC_OK){
+				
+					HttpEntity entity = response.getEntity();
+					BufferedHttpEntity buffer = new BufferedHttpEntity(entity);
+					InputStream iStream = buffer.getContent();
+
+
+					String aux = "";
+
+					BufferedReader r = new BufferedReader(new InputStreamReader(iStream));
+					String line;
+					while ((line = r.readLine()) != null) {
+						aux += line;
+					}
+
+					JSONObject jsonObject = new JSONObject(aux);
+					JSONArray result = jsonObject.getJSONArray("result");
+
+				if(result.getJSONObject(0).getString("status").equalsIgnoreCase("ok")){
+
+					Toast.makeText(getApplicationContext(), "Su pedido fue registrado satisfactoriamente, en unos instantes nos contactaremos con usteed.", 50000).show();
+					listOrders.clear();
+					Bundle orders= new Bundle();
+					orders.putSerializable("ordersList", listOrders);
+					Intent intent = getIntent();
+					intent.putExtra("updateOrders", orders);
+					setResult(2, intent);
+					finish();
+				}					
+			}
+
+			
 		}
 		catch(Exception ex){
-	
+			Toast.makeText(getApplicationContext(), ""+ex.getMessage(),Toast.LENGTH_SHORT).show();
+			
 		}
 	
 	}
