@@ -13,7 +13,7 @@ import android.widget.ListView;
 import java.util.*;
 import java.text.*;
 
-public class ItemOrder extends Activity
+public class ItemOrderActivity extends Activity
 {
 	EditText npQuantity;
     ImageView imageProduct;

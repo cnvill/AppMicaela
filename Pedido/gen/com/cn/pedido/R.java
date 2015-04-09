@@ -21,9 +21,10 @@ public final class R {
         public static final int btnOrderFinish=0x7f06000f;
         public static final int btnTotalProducts=0x7f06000d;
         public static final int costTotalView=0x7f060006;
+        public static final int lblMessage=0x7f060014;
         public static final int lblSummaryCostTotal=0x7f060012;
         public static final int lblTotalPrice=0x7f06000e;
-        public static final int lsvSummary=0x7f060014;
+        public static final int lsvSummary=0x7f060015;
         public static final int lv_products=0x7f060010;
         public static final int orderQuantity=0x7f060004;
         public static final int productAddCart=0x7f06000c;

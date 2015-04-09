@@ -23,11 +23,11 @@
             </intent-filter>
         </activity>
 		<activity
-			android:name=".ItemOrder"
+			android:name=".ItemOrderActivity"
 			android:label="@string/title_itemorder"
 			/>
 		<activity
-			android:name=".SendOrder"
+			android:name=".SendOrderActivity"
 			android:label="@string/title_sendOrder"
 		/>
     </application>

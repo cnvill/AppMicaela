@@ -29,7 +29,7 @@ import java.io.InputStreamReader;
 import org.apache.http.*;
 
 
-public class SendOrder extends Activity {
+public class SendOrderActivity extends Activity {
 	
 	ArrayList<Order> listOrders= new ArrayList<Order>();
 	ArrayList<Product> listProducts= new ArrayList<Product>();
@@ -84,7 +84,7 @@ public class SendOrder extends Activity {
 					df= new DecimalFormat("#.##");
 					lblSammaryCostTotal.setText("Costo Total: s/."+ df.format(tempTotalCost));
 					
-					final StableArrayAdapter adapter= new StableArrayAdapter(SendOrder.this, android.R.layout.simple_list_item_1, from);
+					final StableArrayAdapter adapter= new StableArrayAdapter(SendOrderActivity.this, android.R.layout.simple_list_item_1, from);
 					lsvSammary.setAdapter(adapter);
         		}
             }
@@ -154,7 +154,7 @@ public class SendOrder extends Activity {
 
 				if(result.getJSONObject(0).getString("status").equalsIgnoreCase("ok")){
 
-					Toast.makeText(getApplicationContext(), "Su pedido fue registrado correctamente, En unos instantes nos contactaremos con usted.", 60000).show();
+					Toast.makeText(getApplicationContext(), "Su pedido fue registrado correctamente, en unos instantes nos comunicaremos con usted.", 60000).show();
 					listOrders.clear();
 					Bundle orders= new Bundle();
 					orders.putSerializable("ordersList", listOrders);

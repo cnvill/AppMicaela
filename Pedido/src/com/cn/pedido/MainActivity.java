@@ -116,7 +116,7 @@ public class MainActivity extends Activity
 			
 			Bundle orders= new Bundle();
 			orders.putSerializable("ordersList", ordersList);
-			Intent sendOrder= new Intent(getBaseContext(), SendOrder.class);
+			Intent sendOrder= new Intent(getBaseContext(), SendOrderActivity.class);
 			sendOrder.putExtra("orders", orders);
 			sendOrder.putExtra("totalCost",totalPreci);
 			this.startActivityForResult(sendOrder, 2);
