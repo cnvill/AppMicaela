@@ -17,15 +17,18 @@ public final class R {
         public static final int addMas=0x7f060005;
         public static final int addMenos=0x7f060003;
         public static final int addOrder=0x7f060007;
-        public static final int btnFinishOrder=0x7f060013;
-        public static final int btnOrderFinish=0x7f06000f;
-        public static final int btnTotalProducts=0x7f06000d;
+        public static final int btnFinishOrder=0x7f060018;
+        public static final int btnLogin=0x7f060011;
+        public static final int btnOrderFinish=0x7f060014;
+        public static final int btnTotalProducts=0x7f060012;
         public static final int costTotalView=0x7f060006;
-        public static final int lblMessage=0x7f060014;
-        public static final int lblSummaryCostTotal=0x7f060012;
-        public static final int lblTotalPrice=0x7f06000e;
-        public static final int lsvSummary=0x7f060015;
-        public static final int lv_products=0x7f060010;
+        public static final int lblCopyright=0x7f060010;
+        public static final int lblMessage=0x7f060019;
+        public static final int lblSummaryCostTotal=0x7f060017;
+        public static final int lblTotalPrice=0x7f060013;
+        public static final int loginImageView=0x7f06000d;
+        public static final int lsvSummary=0x7f06001a;
+        public static final int lv_products=0x7f060015;
         public static final int orderQuantity=0x7f060004;
         public static final int productAddCart=0x7f06000c;
         public static final int productId=0x7f060008;
@@ -35,13 +38,16 @@ public final class R {
         public static final int productViewDescription=0x7f060002;
         public static final int productViewImage=0x7f060000;
         public static final int productViewName=0x7f060001;
-        public static final int txtAddress=0x7f060011;
+        public static final int txtAddress=0x7f060016;
+        public static final int txtName=0x7f06000e;
+        public static final int txtPhone=0x7f06000f;
     }
     public static final class layout {
         public static final int item_order=0x7f030000;
         public static final int list_item_layout=0x7f030001;
-        public static final int main=0x7f030002;
-        public static final int send_to_order=0x7f030003;
+        public static final int login=0x7f030002;
+        public static final int main=0x7f030003;
+        public static final int send_to_order=0x7f030004;
     }
     public static final class string {
         public static final int app_name=0x7f040001;

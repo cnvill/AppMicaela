@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme" >
         <activity
             android:label="@string/app_name"
-            android:name=".MainActivity" >
+            android:name=".LoginActivity" >
             <intent-filter >
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,6 +29,10 @@
 		<activity
 			android:name=".SendOrderActivity"
 			android:label="@string/title_sendOrder"
+		/>
+		<activity
+			android:name=".MainActivity"
+			android:label="@string/app_name"
 		/>
     </application>
 
