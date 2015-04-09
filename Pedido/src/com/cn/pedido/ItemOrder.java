@@ -17,10 +17,10 @@ public class ItemOrder extends Activity
 {
 	EditText npQuantity;
     ImageView imageProduct;
-	TextView nameProduct, preciProduct, descriptionProduct, costTotal;
+	TextView nameProduct, descriptionProduct, costTotal;
 	private static String idProduct;
-	private static Double price=0.0;
-	private static Integer Quantity=1;
+	private static Double price = 0.0;
+	private static Integer Quantity = 1;
 	@Override
     public void onCreate(Bundle savedInstanceState)
 	{
@@ -30,7 +30,6 @@ public class ItemOrder extends Activity
 		npQuantity=(EditText)findViewById(R.id.orderQuantity);
 		imageProduct=(ImageView)findViewById(R.id.productViewImage);
 		nameProduct=(TextView)findViewById(R.id.productViewName);
-		preciProduct=(TextView)findViewById(R.id.productViewPrice);
 		descriptionProduct=(TextView)findViewById(R.id.productViewDescription);
 		costTotal=(TextView)findViewById(R.id.costTotalView);
 
@@ -54,9 +53,8 @@ public class ItemOrder extends Activity
 			Product oProduct = listProduct.get(indice);
 			price = oProduct.getPrice();
 			imageProduct.setImageBitmap(oProduct.getPhoto());
-			nameProduct.setText(oProduct.getName());
+			nameProduct.setText(oProduct.getName()+" s/."+price);
 			descriptionProduct.setText(oProduct.getDescription());
-			preciProduct.setText("s/."+price+" ");
 			costTotal.setText(" s/."+price+" ");
 			Double stock=new Double(oProduct.getStock());
 			Quantity=stock.intValue();
@@ -78,6 +76,9 @@ public class ItemOrder extends Activity
 	 value=value-1;
 	 if(value<=1)
 		 value=1;
+	 if(Quantity==0)
+		 value=0;
+		 
 		npQuantity.setText(""+value);
 		DecimalFormat df= new DecimalFormat("#.##");
 		costTotal.setText(" s/."+df.format(price*value)+" ");

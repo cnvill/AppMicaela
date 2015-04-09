@@ -37,7 +37,7 @@ public class SendOrder extends Activity {
 	TextView lblSammaryCostTotal;
 	AlertDialog.Builder dlConfirmacion;
 	int indice=-1;
-	
+	EditText txtAddress;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -45,6 +45,7 @@ public class SendOrder extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.send_to_order);		
 		
+		txtAddress= (EditText)findViewById(R.id.txtAddress);
 		lsvSammary=(ListView)findViewById(R.id.lsvSummary);		
 		lblSammaryCostTotal=(TextView)findViewById(R.id.lblSummaryCostTotal);		
 		
@@ -107,12 +108,22 @@ public class SendOrder extends Activity {
 	
 	public void onFinishOrder(View v){
 		try{
+			if(txtAddress.getText().length()==0){
+				Toast.makeText(getApplicationContext(), "Ingrese dirección de entrega", Toast.LENGTH_LONG).show();
+				txtAddress.setFocusable(true);
+				return;
+			}
+			
 			StrictMode.ThreadPolicy policy= new StrictMode.ThreadPolicy.Builder().permitAll().build();
 			StrictMode.setThreadPolicy(policy);
 			
 			HttpClient oHttpclient= new DefaultHttpClient();
 			HttpPost oHttpPost = new HttpPost("http://loswaykis.com/ws/wspedidoinsert.php");
 			List<BasicNameValuePair> namevaluePairs= new ArrayList<BasicNameValuePair>();
+			
+
+			namevaluePairs.add(new BasicNameValuePair("phone", "phone"));
+			namevaluePairs.add(new BasicNameValuePair("addrress", txtAddress.getText().toString()));
 			
 			for(int i=0; i<listOrders.size(); i++){
 				
@@ -143,7 +154,7 @@ public class SendOrder extends Activity {
 
 				if(result.getJSONObject(0).getString("status").equalsIgnoreCase("ok")){
 
-					Toast.makeText(getApplicationContext(), "Su pedido fue registrado satisfactoriamente, en unos instantes nos contactaremos con usteed.", 50000).show();
+					Toast.makeText(getApplicationContext(), "Su pedido fue registrado correctamente, En unos instantes nos contactaremos con usted.", 60000).show();
 					listOrders.clear();
 					Bundle orders= new Bundle();
 					orders.putSerializable("ordersList", listOrders);

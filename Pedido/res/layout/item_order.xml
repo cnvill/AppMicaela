@@ -8,8 +8,8 @@
 	>
      <ImageView
 		android:id="@+id/productViewImage"
-		android:layout_width ="300dp"
-		android:layout_height ="250dp"
+		android:layout_width ="wrap_content"
+		android:layout_height ="wrap_content"
 		android:layout_centerHorizontal ="true" 
 		/>
 
@@ -31,20 +31,6 @@
 			android:paddingBottom="4dp"
 			/>
 
-	<TextView
-		android:id="@+id/productViewPrice"
-		android:layout_width ="wrap_content"
-		android:layout_height="50dp"
-		android:text="Costo: S/.0.00"
-		android:layout_below="@+id/productViewDescription"
-		android:layout_centerHorizontal ="true" 
-		android:layout_toLeftOf="@+id/addMenos"
-		android:layout_toStartOf="@+id/addMenos"
-		android:paddingTop="10dp"
-		android:textAppearance="?android:attr/textAppearanceLarge"
-
-	/>
-	
     <Button
         android:id="@+id/addMenos"
         android:layout_width="wrap_content"
