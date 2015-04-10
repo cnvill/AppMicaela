@@ -48,9 +48,15 @@ public class SendOrderActivity extends Activity {
 		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.send_to_order);
-		
-		ms = new MiServicioGps(this.getApplicationContext());
-		ms.setCoordenadas();
+		try{
+
+			ms = new MiServicioGps(this.getApplicationContext());
+			ms.setCoordenadas();	
+		}catch(Exception ex){
+
+			Toast.makeText(getApplicationContext(), "Recuperación de ubicación", 60000).show();
+			
+		}
 
 		Toast.makeText(getApplicationContext(), "Si desea quitar productos seleccione la lista.", 60000).show();
 		
