@@ -6,6 +6,7 @@ import android.view.*;
 import android.widget.*;
 import java.util.*;
 import java.text.*;
+import java.util.UUID;
 
 
 import org.apache.http.HttpEntity;
@@ -38,6 +39,7 @@ public class SendOrderActivity extends Activity {
 	AlertDialog.Builder dlConfirmacion;
 	int indice=-1;
 	EditText txtAddress;
+	String phone;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -45,12 +47,16 @@ public class SendOrderActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.send_to_order);		
 		
+
+		Toast.makeText(getApplicationContext(), "Si desea quitar productos seleccione la lista.", 60000).show();
+		
 		txtAddress= (EditText)findViewById(R.id.txtAddress);
 		lsvSammary=(ListView)findViewById(R.id.lsvSummary);		
 		lblSammaryCostTotal=(TextView)findViewById(R.id.lblSummaryCostTotal);		
 		
 		Bundle extraOrders=getIntent().getBundleExtra("orders");
 		listOrders=(ArrayList<Order>)extraOrders.getSerializable("ordersList");
+		phone=getIntent().getExtras().getString("phone");
 		DecimalFormat df= new DecimalFormat("#");
 		
 		final ArrayList<String> from= new ArrayList<String>();
@@ -121,9 +127,13 @@ public class SendOrderActivity extends Activity {
 			HttpPost oHttpPost = new HttpPost("http://loswaykis.com/ws/wspedidoinsert.php");
 			List<BasicNameValuePair> namevaluePairs= new ArrayList<BasicNameValuePair>();
 			
-
-			namevaluePairs.add(new BasicNameValuePair("phone", "phone"));
-			namevaluePairs.add(new BasicNameValuePair("addrress", txtAddress.getText().toString()));
+			UUID idpedido= UUID.randomUUID();
+			
+			namevaluePairs.add(new BasicNameValuePair("idpedido", idpedido.toString()));
+			namevaluePairs.add(new BasicNameValuePair("phone", phone));
+			namevaluePairs.add(new BasicNameValuePair("address", txtAddress.getText().toString()));
+			namevaluePairs.add(new BasicNameValuePair("latitude", "0.0"));
+			namevaluePairs.add(new BasicNameValuePair("longitude", "0.0"));
 			
 			for(int i=0; i<listOrders.size(); i++){
 				
@@ -151,7 +161,7 @@ public class SendOrderActivity extends Activity {
 
 					JSONObject jsonObject = new JSONObject(aux);
 					JSONArray result = jsonObject.getJSONArray("result");
-
+				
 				if(result.getJSONObject(0).getString("status").equalsIgnoreCase("ok")){
 
 					Toast.makeText(getApplicationContext(), "Su pedido fue registrado correctamente, en unos instantes nos comunicaremos con usted.", 60000).show();
@@ -162,9 +172,13 @@ public class SendOrderActivity extends Activity {
 					intent.putExtra("updateOrders", orders);
 					setResult(2, intent);
 					finish();
-				}					
-			}
-
+				}
+				else
+					Toast.makeText(getApplicationContext(), "No se registro su pedido intente de nuevo.", 60000).show();
+				
+			}else
+				Toast.makeText(getApplicationContext(), "Ocurrio un problema con la red.", 60000).show();
+			
 			
 		}
 		catch(Exception ex){

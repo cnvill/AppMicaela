@@ -46,15 +46,6 @@
 		android:onClick="onFinishOrder"
 		/>
 
-	<TextView
-		android:id="@+id/lblMessage"
-		android:layout_width ="wrap_content"
-		android:layout_centerHorizontal ="true"
-		android:text="* Quitar producto al seleccionar en la lista"
-		android:layout_below="@+id/btnFinishOrder"
-		android:layout_alignParentLeft="true"
-		android:textColor="#FA8258"
-	/>
 	<ListView
 		android:id="@+id/lsvSummary"
 		android:layout_width ="wrap_content"

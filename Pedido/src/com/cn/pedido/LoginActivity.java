@@ -58,7 +58,10 @@ public class LoginActivity extends Activity
 			phone = manager.GetConfigNotifyOption("config");
 			if(ValidPhone(phone).equalsIgnoreCase("ok")){
 				Intent mainActivity= new Intent(this, MainActivity.class);
-	           startActivity(mainActivity);
+
+				mainActivity.putExtra("phone", phone);
+				startActivity(mainActivity);
+			   finish();
 			}			
 		}
 		else
@@ -88,6 +91,7 @@ public class LoginActivity extends Activity
 			return;
 		}else
 		{
+			manager.insertarParameter("config",txtPhone.getText().toString());
 			try{
 
 				UUID idusuario = UUID.randomUUID();
@@ -125,7 +129,9 @@ public class LoginActivity extends Activity
 					if(result.getJSONObject(0).getString("status").equalsIgnoreCase("ok")){
 						Toast.makeText(getApplicationContext(), "Se registro correctamente", Toast.LENGTH_LONG).show();
 						Intent mainActivity= new Intent(this, MainActivity.class);
+						mainActivity.putExtra("phone", txtPhone.getText().toString());
 						startActivity(mainActivity);
+						finish();
 					}else{
 						Toast.makeText(getApplicationContext(), "No se llego a registrar intentende nuevo", Toast.LENGTH_LONG).show();
 					}

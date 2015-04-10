@@ -37,6 +37,7 @@ public class MainActivity extends Activity
     private TextView lblTotalCost;
 	private Button btnTotalProduct;
 	private static Double totalPreci=0.00;
+	String phone; 
 	/** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -44,7 +45,12 @@ public class MainActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 	
-		
+		Bundle bundle=getIntent().getExtras();
+
+		if(bundle.getString("phone")!=null){
+			phone=bundle.getString("phone");
+		  }
+		  
         ListView lvProducts = (ListView) findViewById(R.id.lv_products);
     	lblTotalCost=(TextView)findViewById(R.id.lblTotalPrice);    
 		btnTotalProduct=(Button)findViewById(R.id.btnTotalProducts);
@@ -119,6 +125,7 @@ public class MainActivity extends Activity
 			Intent sendOrder= new Intent(getBaseContext(), SendOrderActivity.class);
 			sendOrder.putExtra("orders", orders);
 			sendOrder.putExtra("totalCost",totalPreci);
+			sendOrder.putExtra("phone",phone);
 			this.startActivityForResult(sendOrder, 2);
 		}
 		else
