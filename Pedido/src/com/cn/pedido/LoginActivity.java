@@ -58,10 +58,10 @@ public class LoginActivity extends Activity
 			phone = manager.GetConfigNotifyOption("config");
 			if(ValidPhone(phone).equalsIgnoreCase("ok")){
 				Intent mainActivity= new Intent(this, MainActivity.class);
-
 				mainActivity.putExtra("phone", phone);
 				startActivity(mainActivity);
-			   finish();
+				finish();
+				
 			}			
 		}
 		else
@@ -93,6 +93,7 @@ public class LoginActivity extends Activity
 			mainActivity.putExtra("phone", txtPhone.getText().toString());
 			startActivity(mainActivity);
 			finish();
+			
 		}else
 		{
 			manager.insertarParameter("config",txtPhone.getText().toString());

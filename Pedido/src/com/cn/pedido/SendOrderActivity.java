@@ -7,7 +7,7 @@ import android.widget.*;
 import java.util.*;
 import java.text.*;
 import java.util.UUID;
-
+import com.cn.pedido.Class.*;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -40,13 +40,17 @@ public class SendOrderActivity extends Activity {
 	int indice=-1;
 	EditText txtAddress;
 	String phone;
+	MiServicioGps ms;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.send_to_order);		
+		setContentView(R.layout.send_to_order);
 		
+		ms = new MiServicioGps(this.getApplicationContext());
+		ms.setCoordenadas();
 
 		Toast.makeText(getApplicationContext(), "Si desea quitar productos seleccione la lista.", 60000).show();
 		
@@ -114,12 +118,14 @@ public class SendOrderActivity extends Activity {
 	
 	public void onFinishOrder(View v){
 		try{
+
 			if(txtAddress.getText().length()==0){
 				Toast.makeText(getApplicationContext(), "Ingrese dirección de entrega", Toast.LENGTH_LONG).show();
 				txtAddress.setFocusable(true);
 				return;
 			}
-			
+			 ms.setCoordenadas();
+
 			StrictMode.ThreadPolicy policy= new StrictMode.ThreadPolicy.Builder().permitAll().build();
 			StrictMode.setThreadPolicy(policy);
 			
@@ -132,8 +138,8 @@ public class SendOrderActivity extends Activity {
 			namevaluePairs.add(new BasicNameValuePair("idpedido", idpedido.toString()));
 			namevaluePairs.add(new BasicNameValuePair("phone", phone));
 			namevaluePairs.add(new BasicNameValuePair("address", txtAddress.getText().toString()));
-			namevaluePairs.add(new BasicNameValuePair("latitude", "0.0"));
-			namevaluePairs.add(new BasicNameValuePair("longitude", "0.0"));
+			namevaluePairs.add(new BasicNameValuePair("latitude", String.valueOf(ms.latitud)));
+			namevaluePairs.add(new BasicNameValuePair("longitude", String.valueOf(ms.longitud)));
 			
 			for(int i=0; i<listOrders.size(); i++){
 				

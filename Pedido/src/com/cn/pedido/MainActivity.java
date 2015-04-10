@@ -44,7 +44,8 @@ public class MainActivity extends Activity
 	{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-	
+
+
 		Bundle bundle=getIntent().getExtras();
 
 		if(bundle.getString("phone")!=null){
@@ -70,8 +71,8 @@ public class MainActivity extends Activity
 				HttpEntity entity = response.getEntity();
 				BufferedHttpEntity buffer = new BufferedHttpEntity(entity);
 				InputStream iStream = buffer.getContent();
-
-
+				
+				
 				String aux = "";
 
 				BufferedReader r = new BufferedReader(new InputStreamReader(iStream));
@@ -84,6 +85,7 @@ public class MainActivity extends Activity
 				JSONObject jsonObject = new JSONObject(aux);
 				JSONArray products = jsonObject.getJSONArray("productos");
 
+				
 				// Recorremos el array con los elementos products
 				for(int i = 0; i < products.length(); i++) {
 					JSONObject product = products.getJSONObject(i);
@@ -115,7 +117,9 @@ public class MainActivity extends Activity
         // Creamos el objeto CityAdapter y lo asignamos al ListView
         ProductAdapter productAdapter = new ProductAdapter(this, productsAvaiable);
         lvProducts.setAdapter(productAdapter);
-	}
+		Toast.makeText(getApplicationContext(), "Se recomienda activar su GPS, para determinar su ubicación",Toast.LENGTH_LONG).show();
+		
+		}
 	
 	public void onSendOrder(View v){
 		if(ordersList.size()>0){
