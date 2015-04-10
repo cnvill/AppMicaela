@@ -51,7 +51,7 @@ public class LoginActivity extends Activity
         super.onCreate(savedInstanceState);
 
         manager= new DataBaseManager(this);
-
+		//Valida si existe parametro	
 		if(manager.GetConfigNotify("config"))
 		{
 			//Phone
@@ -87,8 +87,12 @@ public class LoginActivity extends Activity
 			}
 
 		if(ValidPhone(txtPhone.getText().toString()).equalsIgnoreCase("ok")){
-			Toast.makeText(getApplicationContext(), "El Nº Celular ya se encuentra registrado", Toast.LENGTH_LONG).show();
-			return;
+			manager.insertarParameter("config",txtPhone.getText().toString());
+			Toast.makeText(getApplicationContext(), "Usted ya se registo anteriormente, Bienvenido", Toast.LENGTH_LONG).show();
+			Intent mainActivity= new Intent(this, MainActivity.class);
+			mainActivity.putExtra("phone", txtPhone.getText().toString());
+			startActivity(mainActivity);
+			finish();
 		}else
 		{
 			manager.insertarParameter("config",txtPhone.getText().toString());
