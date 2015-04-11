@@ -39,10 +39,14 @@ public class MiServicioGps extends Service implements LocationListener {
     {
 		latitud = latitud;
 		longitud =longitud;
-		if(gpsActivo){
-		latitud = latitud==0?location.getLatitude():latitud;
-		longitud =longitud==0?location.getLongitude():longitud;
-        }
+		try{
+			if(gpsActivo){
+				latitud = latitud==0?location.getLatitude():latitud;
+				longitud =longitud==0?location.getLongitude():longitud;
+			}	
+		}catch(Exception ex){
+			
+		}
 		
 		messageBody= latitud+"|"+longitud ;
 		
