@@ -37,89 +37,41 @@ public class MainActivity extends Activity
     private TextView lblTotalCost;
 	private Button btnTotalProduct;
 	private static Double totalPreci=0.00;
-	String phone; 
+	String phone;
+	private ProgressDialog progress;
+	Handler updateBarHandler;
+	public ListView lvProducts;
 	/** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState)
 	{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-
-
+		
 		Bundle bundle=getIntent().getExtras();
 
 		if(bundle.getString("phone")!=null){
 			phone=bundle.getString("phone");
 		  }
 		  
-        ListView lvProducts = (ListView) findViewById(R.id.lv_products);
+        lvProducts = (ListView) findViewById(R.id.lv_products);
     	lblTotalCost=(TextView)findViewById(R.id.lblTotalPrice);    
 		btnTotalProduct=(Button)findViewById(R.id.btnTotalProducts);
 		
 		productsAvaiable = new ArrayList<Product>();
 		ordersList=new ArrayList<Order>();
 		
-        try {
-			StrictMode.ThreadPolicy policy= new StrictMode.ThreadPolicy.Builder().permitAll().build();
-			StrictMode.setThreadPolicy(policy);
-            // Llamamos al servicio web para recuperar los datos
-            HttpGet httpGet = new HttpGet("http://loswaykis.com/ws/wsproductos.php");
-            HttpClient httpClient = new DefaultHttpClient();
-            HttpResponse response = httpClient.execute(httpGet);
-           	StatusLine statusLine=response.getStatusLine();
-			if(statusLine.getStatusCode()==HttpStatus.SC_OK){
-				HttpEntity entity = response.getEntity();
-				BufferedHttpEntity buffer = new BufferedHttpEntity(entity);
-				InputStream iStream = buffer.getContent();
-				
-				
-				String aux = "";
-
-				BufferedReader r = new BufferedReader(new InputStreamReader(iStream));
-				String line;
-				while ((line = r.readLine()) != null) {
-					aux += line;
-				}
-
-				// Parseamos la respuesta obtenida del servidor a un objeto JSON
-				JSONObject jsonObject = new JSONObject(aux);
-				JSONArray products = jsonObject.getJSONArray("productos");
-
-				
-				// Recorremos el array con los elementos products
-				for(int i = 0; i < products.length(); i++) {
-					JSONObject product = products.getJSONObject(i);
-
-					// Creamos el objeto product
-					Product c = new Product(
-						product.getString("idproducto"), 
-						product.getString("name"), 
-						product.getString("description"), 
-						product.getDouble("price"), 
-						product.getDouble("stock"), 
-						product.getInt("status"));
-					c.setData(product.getString("photo"));
-
-					// Almacenamos el objeto en el array que hemos creado anteriormente
-					productsAvaiable.add(c);
-				}	
-			}
-			else
-				Toast.makeText(getApplicationContext(), "No hay Conexion a Internet"+statusLine.getStatusCode(),Toast.LENGTH_SHORT).show();
-			
-			
-        }
-        catch(Exception ex) {
-
-			Toast.makeText(getApplicationContext(), "No hay conexion a internet",Toast.LENGTH_SHORT).show();
-		}
-
-        // Creamos el objeto CityAdapter y lo asignamos al ListView
-        ProductAdapter productAdapter = new ProductAdapter(this, productsAvaiable);
-        lvProducts.setAdapter(productAdapter);
-		Toast.makeText(getApplicationContext(), "Se recomienda activar su GPS, para determinar su ubicación",Toast.LENGTH_LONG).show();
-		
-		}
+			progress = new ProgressDialog(this);
+			progress.setMessage("Cargando lista de productos ...");
+			progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+			progress.setProgress(0);
+			progress.setMax(100);
+			progress.show(this, "Cargando lista de productos...", "Espere por favor", true, false);
+			updateBarHandler= new Handler();
+			new CargarProductos().execute();
+			totalPreci=0.0;
+					
+	}
 	
 	public void onSendOrder(View v){
 		if(ordersList.size()>0){
@@ -199,5 +151,113 @@ public class MainActivity extends Activity
 			}
 		}
 	}
+	
+	public class CargarProductos extends AsyncTask<Void, Void, Void>{
+
+        final Thread tProgress = new Thread(){
+			@Override
+			public void run() {
+				try {
+					while (progress.getProgress() <= 100) {
+						Thread.sleep(500);
+						updateBarHandler.post(new Runnable() {
+								public void run() {
+									progress.incrementProgressBy(5);
+								}
+							});
+
+						if (progress.getProgress() == progress.getMax()) {
+							//progress.dismiss();
+							//break;
+						}
+					}
+				} catch (Exception ex) {
+					Toast.makeText(getApplicationContext(), "Error al solicitar " + ex.getMessage(), Toast.LENGTH_SHORT).show();
+				}
+			}
+		};
+
+        @Override
+        protected void onPreExecute(){
+            //Iniciando
+			tProgress.start();
+			
+        }
+
+        @Override
+        protected Void doInBackground(Void... arg0) {
+            // TODO Auto-generated method stub
+            try {
+              	
+				StrictMode.ThreadPolicy policy= new StrictMode.ThreadPolicy.Builder().permitAll().build();
+				StrictMode.setThreadPolicy(policy);
+				
+				// Llamamos al servicio web para recuperar los datos
+				HttpGet httpGet = new HttpGet("http://loswaykis.com/ws/wsproductos.php");
+				HttpClient httpClient = new DefaultHttpClient();
+				HttpResponse response = httpClient.execute(httpGet);
+				StatusLine statusLine=response.getStatusLine();
+				if(statusLine.getStatusCode()==HttpStatus.SC_OK){
+					HttpEntity entity = response.getEntity();
+					BufferedHttpEntity buffer = new BufferedHttpEntity(entity);
+					InputStream iStream = buffer.getContent();
+
+
+					String aux = "";
+
+					BufferedReader r = new BufferedReader(new InputStreamReader(iStream));
+					String line;
+					while ((line = r.readLine()) != null) {
+						aux += line;
+					}
+
+					// Parseamos la respuesta obtenida del servidor a un objeto JSON
+					JSONObject jsonObject = new JSONObject(aux);
+					JSONArray products = jsonObject.getJSONArray("productos");
+
+
+					// Recorremos el array con los elementos products
+					for(int i = 0; i < products.length(); i++) {
+						JSONObject product = products.getJSONObject(i);
+
+						// Creamos el objeto product
+						Product c = new Product(
+							product.getString("idproducto"), 
+							product.getString("name"), 
+							product.getString("description"), 
+							product.getDouble("price"), 
+							product.getDouble("stock"), 
+							product.getInt("status"));
+						c.setData(product.getString("photo"));
+
+						// Almacenamos el objeto en el array que hemos creado anteriormente
+						productsAvaiable.add(c);
+					}	
+				}
+				else
+					Toast.makeText(getApplicationContext(), "No hay Conexion a Internet"+statusLine.getStatusCode(),Toast.LENGTH_SHORT).show();
+				progress.dismiss();
+				tProgress.stop();	
+			//	Thread.sleep(20000); // 20 Segundos
+            } catch (Exception e) {
+                Toast.makeText(getApplicationContext(), "Error al leer Mensaje", Toast.LENGTH_SHORT).show();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid){
+			try{
+				ProductAdapter productAdapter = new ProductAdapter(MainActivity.this, productsAvaiable);
+				lvProducts.setAdapter(productAdapter);
+				Toast.makeText(getApplicationContext(), "Se recomienda activar su GPS, para determinar su ubicación",Toast.LENGTH_LONG).show();
+				
+			}catch(Exception ex){
+				Toast.makeText(getApplicationContext(), ""+ex.getMessage(), Toast.LENGTH_SHORT).show();
+
+			}
+        }
+    }
 	
 }
