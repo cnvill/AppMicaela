@@ -64,10 +64,9 @@ public class MainActivity extends Activity
 			progress = new ProgressDialog(this);
 			progress.setMessage("Cargando lista de productos ...");
 			progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-			progress.setProgress(0);
-			progress.setMax(100);
-			progress.show(this, "Cargando lista de productos...", "Espere por favor", true, false);
-			updateBarHandler= new Handler();
+			progress.setCancelable(false);
+			progress.show();
+			//updateBarHandler= new Handler();
 			new CargarProductos().execute();
 			totalPreci=0.0;
 					
@@ -180,7 +179,7 @@ public class MainActivity extends Activity
         @Override
         protected void onPreExecute(){
             //Iniciando
-			tProgress.start();
+		//	tProgress.start();
 			
         }
 
@@ -236,9 +235,8 @@ public class MainActivity extends Activity
 				}
 				else
 					Toast.makeText(getApplicationContext(), "No hay Conexion a Internet"+statusLine.getStatusCode(),Toast.LENGTH_SHORT).show();
-				progress.dismiss();
-				tProgress.stop();	
-			//	Thread.sleep(20000); // 20 Segundos
+				
+			
             } catch (Exception e) {
                 Toast.makeText(getApplicationContext(), "Error al leer Mensaje", Toast.LENGTH_SHORT).show();
             }
@@ -249,6 +247,9 @@ public class MainActivity extends Activity
         @Override
         protected void onPostExecute(Void aVoid){
 			try{
+				progress.setCancelable(true);
+				progress.dismiss();
+				
 				ProductAdapter productAdapter = new ProductAdapter(MainActivity.this, productsAvaiable);
 				lvProducts.setAdapter(productAdapter);
 				Toast.makeText(getApplicationContext(), "Se recomienda activar su GPS, para determinar su ubicación",Toast.LENGTH_LONG).show();
