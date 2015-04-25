@@ -197,7 +197,7 @@ public class SendOrderActivity extends Activity {
 
 	private void AlertConfirm() {
 		final AlertDialog.Builder builderGps = new AlertDialog.Builder(this);
-		builderGps.setMessage("Su pedido fue registrado correctamente, en unos instantes nos comunicaremos con usted.")
+		builderGps.setMessage("Su pedido fue registrado satisfactoriamente, en unos instantes nos comunicaremos con usted. Gracias por su preferencia!")
 			.setCancelable(false)
 			.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
 				public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
