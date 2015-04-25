@@ -41,7 +41,8 @@ public class SendOrderActivity extends Activity {
 	EditText txtAddress;
 	String phone;
 	MiServicioGps ms;
-
+	AlertDialog alertActiveGPS = null;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -175,15 +176,8 @@ public class SendOrderActivity extends Activity {
 					JSONArray result = jsonObject.getJSONArray("result");
 				
 				if(result.getJSONObject(0).getString("status").equalsIgnoreCase("ok")){
-
-					Toast.makeText(getApplicationContext(), "Su pedido fue registrado correctamente, en unos instantes nos comunicaremos con usted.", 60000).show();
-					listOrders.clear();
-					Bundle orders= new Bundle();
-					orders.putSerializable("ordersList", listOrders);
-					Intent intent = getIntent();
-					intent.putExtra("updateOrders", orders);
-					setResult(2, intent);
-					finish();
+					AlertConfirm();
+					
 				}
 				else
 					Toast.makeText(getApplicationContext(), "No se registro su pedido intente de nuevo.", 60000).show();
@@ -200,6 +194,25 @@ public class SendOrderActivity extends Activity {
 	
 	}
 
+
+	private void AlertConfirm() {
+		final AlertDialog.Builder builderGps = new AlertDialog.Builder(this);
+		builderGps.setMessage("Su pedido fue registrado correctamente, en unos instantes nos comunicaremos con usted.")
+			.setCancelable(false)
+			.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+				public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+					listOrders.clear();
+					Bundle orders= new Bundle();
+					orders.putSerializable("ordersList", listOrders);
+					Intent intent = getIntent();
+					intent.putExtra("updateOrders", orders);
+					setResult(2, intent);
+					finish();
+				}
+			});
+		alertActiveGPS = builderGps.create();
+		alertActiveGPS.show();           
+	}
 	 private class StableArrayAdapter extends ArrayAdapter<String> {
 
         HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();

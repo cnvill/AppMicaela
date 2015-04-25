@@ -29,6 +29,7 @@ import org.apache.http.*;
 import android.content.*;
 import java.util.UUID;
 import java.text.*;
+import com.cn.pedido.Class.*;
 
 public class MainActivity extends Activity
 {
@@ -41,6 +42,8 @@ public class MainActivity extends Activity
 	private ProgressDialog progress;
 	Handler updateBarHandler;
 	public ListView lvProducts;
+	AlertDialog alertActiveGPS = null;
+	MiServicioGps ms;
 	/** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -61,14 +64,13 @@ public class MainActivity extends Activity
 		productsAvaiable = new ArrayList<Product>();
 		ordersList=new ArrayList<Order>();
 		
-			progress = new ProgressDialog(this);
-			progress.setMessage("Cargando lista de productos ...");
-			progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-			progress.setCancelable(false);
-			progress.show();
-			//updateBarHandler= new Handler();
-			new CargarProductos().execute();
-			totalPreci=0.0;
+		progress = new ProgressDialog(this);
+		progress.setMessage("Cargando lista de productos ...");
+		progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+		progress.setCancelable(false);
+		progress.show();
+		new CargarProductos().execute();
+		totalPreci=0.0;
 					
 	}
 	
@@ -86,6 +88,23 @@ public class MainActivity extends Activity
 		else
 			Toast.makeText(getApplicationContext(), "No se agrego ningun producto, agrege para poder realizar el pedido",Toast.LENGTH_SHORT).show();
 		
+	}
+	private void AlertNoGps() {
+		final AlertDialog.Builder builderGps = new AlertDialog.Builder(this);
+		builderGps.setMessage("Se recomienda activar su GPS para facilitar la entrega de su pedido")
+			.setCancelable(false)
+			.setPositiveButton("Activar", new DialogInterface.OnClickListener() {
+				public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+					startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+				}
+			}).setNegativeButton("Cancelar", new DialogInterface.OnClickListener(){
+				public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id){
+					alertActiveGPS.show();
+					//AlertNoGps();			  
+				}
+			});
+		alertActiveGPS = builderGps.create();
+		alertActiveGPS.show();           
 	}
 	
 	@Override
@@ -152,29 +171,6 @@ public class MainActivity extends Activity
 	}
 	
 	public class CargarProductos extends AsyncTask<Void, Void, Void>{
-
-        final Thread tProgress = new Thread(){
-			@Override
-			public void run() {
-				try {
-					while (progress.getProgress() <= 100) {
-						Thread.sleep(500);
-						updateBarHandler.post(new Runnable() {
-								public void run() {
-									progress.incrementProgressBy(5);
-								}
-							});
-
-						if (progress.getProgress() == progress.getMax()) {
-							//progress.dismiss();
-							//break;
-						}
-					}
-				} catch (Exception ex) {
-					Toast.makeText(getApplicationContext(), "Error al solicitar " + ex.getMessage(), Toast.LENGTH_SHORT).show();
-				}
-			}
-		};
 
         @Override
         protected void onPreExecute(){
@@ -252,8 +248,9 @@ public class MainActivity extends Activity
 				
 				ProductAdapter productAdapter = new ProductAdapter(MainActivity.this, productsAvaiable);
 				lvProducts.setAdapter(productAdapter);
-				Toast.makeText(getApplicationContext(), "Se recomienda activar su GPS, para determinar su ubicación",Toast.LENGTH_LONG).show();
-				
+				ms= new MiServicioGps(MainActivity.this);
+				if(!ms.gpsActivo)
+					AlertNoGps();				
 			}catch(Exception ex){
 				Toast.makeText(getApplicationContext(), ""+ex.getMessage(), Toast.LENGTH_SHORT).show();
 
