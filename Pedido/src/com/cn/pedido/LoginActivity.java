@@ -36,6 +36,7 @@ import com.cn.pedido.DB.DataBaseManager;
 import android.database.Cursor;
 import android.content.DialogInterface;
 import java.util.UUID;
+import android.telephony.*;
 
 public class LoginActivity extends Activity
 {
@@ -69,6 +70,10 @@ public class LoginActivity extends Activity
 			setContentView(R.layout.login);
 			txtName=(EditText)findViewById(R.id.txtName);    
 			txtPhone=(EditText)findViewById(R.id.txtPhone);    
+			TelephonyManager tm= (TelephonyManager)this.getSystemService(this.TELEPHONY_SERVICE);
+			Toast.makeText(getApplicationContext(), "Su Nº de Celular es:"+tm.getLine1Number(), Toast.LENGTH_LONG).show();
+			
+			txtPhone.setText(tm.getLine1Number());
 		}
 		
 	}
