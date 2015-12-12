@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="hello">Micalea Plaza Gourmet!</string>
-    <string name="app_name">Micalea Plaza Gourmet</string>
+    <string name="hello">Micaela Plaza Gourmet!</string>
+    <string name="app_name">Micaela Plaza Gourmet</string>
 	<string name="title_itemorder">Agregar Pedido</string>
 	<string name="title_sendOrder">Enviar Pedido </string>
 </resources>

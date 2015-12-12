@@ -165,7 +165,7 @@ public class LoginActivity extends Activity
 			StrictMode.setThreadPolicy(policy);
 			
 			HttpClient oHttpclient= new DefaultHttpClient();
-			HttpPost oHttpPost = new HttpPost("http://loswaykis.com/ws/wslogin.php");
+			HttpPost oHttpPost = new HttpPost("http://app.micaelaplazagourmet.com/ws/wslogin.php");
 			List<BasicNameValuePair> namevaluePairs= new ArrayList<BasicNameValuePair>();		
 			namevaluePairs.add(new BasicNameValuePair("phone", phone));
 

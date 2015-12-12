@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DbHelper extends SQLiteOpenHelper{
 
-    private static final String dbName="bdNotifyMe.sqlite";
+    private static final String dbName="bdMicaela.sqlite";
     private static final int dbSchemeVersion=1;
 
     public DbHelper(Context context) {
