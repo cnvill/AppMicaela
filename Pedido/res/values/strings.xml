@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <string name="hello">Los Waykis!</string>
-    <string name="app_name">Los Waykis</string>
-	<string name="title_itemorder">Agregar Pedido</string>
-	<string name="title_sendOrder">Enviar Pedido </string>
-</resources>
