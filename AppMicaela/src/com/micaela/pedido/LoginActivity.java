@@ -50,17 +50,21 @@ public class LoginActivity extends Activity
     public void onCreate(Bundle savedInstanceState)
 	{
         super.onCreate(savedInstanceState);
-
+		
         manager= new DataBaseManager(this);
+		
 		//Valida si existe parametro	
 		if(manager.GetConfigNotify("config"))
 		{
+
+			
 			//Phone
 			phone = manager.GetConfigNotifyOption("config");
 			if(ValidPhone(phone).equalsIgnoreCase("ok")){
 				Intent mainActivity= new Intent(this, MainActivity.class);
 				mainActivity.putExtra("phone", phone);
 				startActivity(mainActivity);
+			
 				finish();
 				
 			}			
